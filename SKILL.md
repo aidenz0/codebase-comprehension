@@ -9,6 +9,40 @@ description: Use when exploring unfamiliar codebases, onboarding to new projects
 
 Systematic approach to understand any codebase regardless of scale. Use L1→L2→L3→L4 progressive depth to build complete mental model efficiently.
 
+## Advantages
+
+### 1. Token Efficiency
+
+| Approach | Token Usage | Context Pressure |
+|----------|-------------|------------------|
+| Random reading (100 files) | ~150K | Overflow |
+| L1 scan (5 files) | ~3K | Low |
+| L1→L2 (15 files) | ~10K | Medium |
+| Full L1→L2→L3→L4 | ~25K | Controlled |
+
+**Why?**
+- Each level has clear boundaries
+- No redundant file reads
+- Token budget per level: ~15K
+
+### 2. Memory File Generation
+
+The skill generates a structured markdown report:
+```
+docs/superpowers/specs/YYYY-MM-DD-codebase-analysis.md
+```
+
+This file:
+- Stores understanding for future sessions
+- Can be referenced instead of re-reading
+- Provides audit trail for modifications
+
+### 3. Scale Adaptation
+
+- Small (<10K lines): Full L1→L2→L3→L4
+- Medium (10K-100K): L1→L2 + targeted L3/L4
+- Large (>100K): L1 first, then priority-driven
+
 ## When to Use
 
 - Onboarding to a new project
