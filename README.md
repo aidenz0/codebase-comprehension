@@ -31,7 +31,7 @@ L3: Data Flow      → How does it work? (request lifecycle, state)
 L4: Deep Dive      → How to modify safely? (boundary conditions, risks)
 ```
 
-### L1: Global Scan (5 min)
+### L1: Global Scan
 
 **Goal**: Build overall understanding
 
@@ -42,7 +42,7 @@ L4: Deep Dive      → How to modify safely? (boundary conditions, risks)
 
 **Output**: 1-2 paragraphs summary
 
-### L2: Module Partition (10 min)
+### L2: Module Partition
 
 **Goal**: Understand system boundaries
 
@@ -53,7 +53,7 @@ L4: Deep Dive      → How to modify safely? (boundary conditions, risks)
 
 **Output**: Module table + diagram
 
-### L3: Data Flow Tracing (15 min)
+### L3: Data Flow Tracing
 
 **Goal**: Understand how the system works
 
@@ -64,7 +64,7 @@ L4: Deep Dive      → How to modify safely? (boundary conditions, risks)
 
 **Output**: Flow diagram + description
 
-### L4: Deep Dive (20 min)
+### L4: Deep Dive
 
 **Goal**: Understand core logic for modifications
 
@@ -159,7 +159,12 @@ The skill will automatically apply L1→L2→L3→L4 progressive analysis and ge
 
 ## Output Example
 
-See [MiniMind Analysis](./test-projects/minimind-analysis.md) for a complete example.
+The skill generates a comprehensive Markdown report with:
+- Tech stack analysis
+- Module dependency diagrams (Mermaid)
+- Data flow diagrams (Mermaid)
+- Code statistics
+- Risk assessment (for modification scenarios)
 
 ## Comparison
 
@@ -195,6 +200,31 @@ brainstorming → codebase-comprehension → writing-plans
 
 4. **Scale-aware**: Different strategies for different codebase sizes
 
+## Design Philosophy
+
+Inspired by [web-access](https://github.com/eze-is/web-access), this skill follows these principles:
+
+### Skill = Philosophy + Technical Facts
+
+A skill should not be a step-by-step manual. Instead, it should provide:
+- **Philosophy**: The underlying approach and trade-offs
+- **Technical Facts**: Verifiable facts about the codebase
+
+Let AI make decisions based on facts, don't do the reasoning for it.
+
+### Memory as First-Class Citizen
+
+Unlike ephemeral conversations, this skill treats output as "memory":
+- Structured markdown becomes persistent knowledge
+- Future sessions can reference instead of re-exploring
+- Provides audit trail for modifications
+
+### Scale-Aware, Not One-Size-Fits-All
+
+- Small codebase: Full exploration
+- Large codebase: Priority-driven, incremental
+- Each level has clear entry/exit criteria
+
 ## License
 
 MIT
@@ -202,8 +232,12 @@ MIT
 ## Inspired By
 
 - [web-access](https://github.com/eze-is/web-access) - Claude Code web access skill
-- [Superpowers](https://github.com/superpowers) - Skills framework
-- [Claude Code](https://claude.com/claude-code) - AI coding assistant
+
+---
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=aidenz0/codebase-comprehension&type=Date)](https://star-history.com/#aidenz0/codebase-comprehension&Date)
 
 ---
 
