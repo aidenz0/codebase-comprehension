@@ -230,17 +230,6 @@ brainstorming → codebase-comprehension → writing-plans
 - 大型代码库：优先级驱动，增量探索
 - 每层有明确的进入/退出标准
 
-## 项目结构
-
-```
-codebase-comprehension/
-├── SKILL.md              # 技能定义
-├── README.md             # 英文说明
-├── README-cn.md          # 中文说明
-└── test-projects/        # 测试项目示例
-    └── minimind-analysis.md
-```
-
 ## License
 
 MIT
