@@ -108,11 +108,12 @@ Example:
 graph TD
     A["root/"] --> B["src/"]
     B --> C["components/"]
+```
 
+```mermaid
 sequenceDiagram
-    participant User
-    participant System
     User->>System: request
+    System-->>User: response
 ```
 
 ## Project Structure

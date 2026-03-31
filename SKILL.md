@@ -318,12 +318,6 @@ graph LR
 3. **Data Flow** (for L3)
 ```mermaid
 sequenceDiagram
-    participant User
-    participant Router
-    participant Controller
-    participant Service
-    participant Database
-    
     User->>Router: Request
     Router->>Controller: Dispatch
     Controller->>Service: Process
