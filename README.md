@@ -1,5 +1,9 @@
 # Codebase Comprehension
 
+[中文 README](./README-cn.md)
+
+---
+
 A Claude Code skill for systematic code exploration and understanding.
 
 ## Overview
@@ -127,3 +131,7 @@ MIT
 
 - [web-access](https://github.com/eze-is/web-access) - Claude Code联网能力skill
 - Superpowers skills framework
+
+---
+
+[中文版本](./README-cn.md)
