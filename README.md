@@ -4,105 +4,117 @@
 
 ---
 
-A Claude Code skill for systematic code exploration and understanding.
+A Claude Code skill for **systematic code exploration and understanding**.
 
-## Overview
+## Why This Skill?
 
-`codebase-comprehension` provides a systematic approach to understanding any codebase regardless of scale. It guides AI agents through L1→L2→L3→L4 progressive depth to build a complete mental model efficiently.
+When AI explores unknown codebases, it often faces these problems:
 
-## When to Use
+| Problem | Without Skill | With Skill |
+|---------|---------------|-------------|
+| **Random reading** | Jumps between files randomly, no strategy | Follows L1→L2→L3→L4 systematic approach |
+| **Token explosion** | Reads entire codebase, context overflow | Progressive depth, each level has clear boundaries |
+| **No memory** | Forgets what was learned, repeats work | Generates structured markdown as "memory" |
+| **Poor output** | Fragmented notes, hard to review | Unified format with Mermaid diagrams |
 
-- Onboarding to a new project
-- Understanding large-scale architecture
-- Finding specific functionality in big codebases
-- Analyzing critical paths for modifications
-- Any scenario requiring "how does this work?"
+## What is Progressive Analysis?
 
-## Installation
+The skill uses **L1→L2→L3→L4 progressive depth** to build understanding:
 
-```bash
-# Clone to Claude Code skills directory
-cd ~/.claude/skills
-git clone https://github.com/YOUR_USERNAME/codebase-comprehension.git
+```
+L1: Global Scan     → What is this project? (tech stack, entry points)
+        ↓
+L2: Module Partition → How is it organized? (dependencies, core modules)
+        ↓
+L3: Data Flow      → How does it work? (request lifecycle, state)
+        ↓
+L4: Deep Dive      → How to modify safely? (boundary conditions, risks)
 ```
 
-Or use Claude Plugin:
+### L1: Global Scan (5 min)
 
-```bash
-claude plugin marketplace add https://github.com/YOUR_USERNAME/codebase-comprehension
-claude plugin install codebase-comprehension@codebase-comprehension --scope user
-```
+**Goal**: Build overall understanding
 
-## Quick Start
-
-Tell Claude to analyze a codebase:
-
-> "Help me understand this project" or "Explore the architecture of this codebase"
-
-The skill will automatically apply L1→L2→L3→L4 progressive analysis.
-
-## Methodology
-
-### L1: Global Scan
-
-Build overall understanding:
-- Identify tech stack
-- Locate entry files
+- Identify tech stack (Python? Node? Rust?)
+- Locate entry files (main.py, index.ts, etc.)
 - Analyze directory structure
 - Estimate code scale
 
-### L2: Module Partition
+**Output**: 1-2 paragraphs summary
 
-Understand system boundaries:
+### L2: Module Partition (10 min)
+
+**Goal**: Understand system boundaries
+
 - Trace dependencies from entry points
 - Identify core modules (most referenced)
 - Analyze module responsibilities
 - Generate Mermaid dependency graph
 
-### L3: Data Flow Tracing
+**Output**: Module table + diagram
 
-Understand how the system works:
+### L3: Data Flow Tracing (15 min)
+
+**Goal**: Understand how the system works
+
 - Trace request lifecycle
 - Analyze data transformation
 - Map state management
 - Generate Mermaid sequence diagram
 
-### L4: Deep Dive
+**Output**: Flow diagram + description
 
-Understand core logic:
+### L4: Deep Dive (20 min)
+
+**Goal**: Understand core logic for modifications
+
 - Identify critical paths
 - Find boundary conditions (timeout, retry, concurrency)
-- Assess risks for modifications
+- Assess modification risks
 - Generate decision point tables
 
-## Output
+**Output**: Risk analysis + recommendations
 
-The skill generates a comprehensive Markdown report with:
+## Advantages
 
-- Tech stack analysis
-- Module dependency diagrams (Mermaid)
-- Data flow diagrams (Mermaid)
-- Code statistics
-- Risk assessment (for modification scenarios)
+### 1. Token Efficiency
 
-## Scale-Based Strategy
+| Approach | Token Usage | Context Pressure |
+|----------|-------------|------------------|
+| Random reading 100 files | ~150K tokens | Overflow |
+| L1 scan (5 files) | ~3K tokens | Low |
+| L1→L2 (15 files) | ~10K tokens | Medium |
+| Full L1→L2→L3→L4 | ~25K tokens | Controlled |
+
+**Why?**
+- Each level has **clear boundaries**
+- No redundant file reads
+- Token budget per level: ~15K
+
+### 2. Context Management
+
+The skill generates **structured output** that serves as "memory":
+
+```
+docs/superpowers/specs/YYYY-MM-DD-codebase-analysis.md
+```
+
+This file:
+- Stores understanding for future sessions
+- Can be referenced instead of re-reading
+- Provides audit trail for modifications
+
+### 3. Scale Adaptation
 
 | Codebase Size | Strategy |
 |--------------|----------|
-| Small (<10K lines) | Full scan + focused reading |
-| Medium (10K-100K) | Partitioned scan + correlation |
-| Large (>100K) | Priority-driven + incremental |
+| Small (<10K lines) | Full L1→L2→L3→L4 |
+| Medium (10K-100K) | L1→L2 + targeted L3/L4 |
+| Large (>100K) | L1 first, then priority-driven |
 
-## Mermaid Compatibility
+### 4. Mermaid Diagrams
 
-This skill generates Mermaid diagrams with maximum compatibility:
-
-- English labels only
-- Double quotes for non-ASCII text
-- No subgraph (not widely supported)
-- `participant` syntax in sequence diagrams
-
-Example:
+Generated diagrams help visualize architecture:
 
 ```mermaid
 graph TD
@@ -112,17 +124,76 @@ graph TD
 
 ```mermaid
 sequenceDiagram
-    User->>System: request
-    System-->>User: response
+    User->>API: request
+    API->>Service: process
+    Service->>DB: query
+    DB-->>Service: result
+    Service-->>API: response
+    API-->>User: response
 ```
 
-## Project Structure
+## Installation
+
+```bash
+# Clone to Claude Code skills directory
+cd ~/.claude/skills
+git clone https://github.com/aidenz0/codebase-comprehension.git
+```
+
+Or use Claude Plugin:
+
+```bash
+claude plugin marketplace add https://github.com/aidenz0/codebase-comprehension
+claude plugin install codebase-comprehension@codebase-comprehension --scope user
+```
+
+## Usage
+
+Simply tell Claude to analyze a codebase:
+
+> "Help me understand this project"
+> "Explore the architecture of this codebase"
+> "Find the core logic for payment processing"
+
+The skill will automatically apply L1→L2→L3→L4 progressive analysis and generate a comprehensive report.
+
+## Output Example
+
+See [MiniMind Analysis](./test-projects/minimind-analysis.md) for a complete example.
+
+## Comparison
+
+| Feature | This Skill | Traditional Approach |
+|---------|------------|---------------------|
+| Method | Systematic | Random |
+| Depth Control | Progressive levels | All at once |
+| Output | Markdown + Diagrams | Notes |
+| Token Usage | Bounded | Unbounded |
+| Reusability | "Memory" file | Lost after session |
+
+## Workflow Integration
 
 ```
-codebase-comprehension/
-├── SKILL.md              # Main skill definition
-└── README.md             # This file
+brainstorming → codebase-comprehension → writing-plans
+                    ↓
+            Generate memory file
+                    ↓
+            docs/superpowers/specs/...
 ```
+
+- **brainstorming**: Before starting, check if project needs understanding
+- **codebase-comprehension**: Apply systematic exploration
+- **writing-plans**: Use generated report for planning
+
+## Why It Works
+
+1. **Navigation analogy**: Like a GPS, you first locate where you are (L1), then plan route (L2-L4), not wander randomly
+
+2. **Token budget**: Each level has clear scope, preventing context overflow
+
+3. **Memory file**: Structured output becomes "institutional knowledge" for future sessions
+
+4. **Scale-aware**: Different strategies for different codebase sizes
 
 ## License
 
@@ -130,8 +201,9 @@ MIT
 
 ## Inspired By
 
-- [web-access](https://github.com/eze-is/web-access) - Claude Code联网能力skill
-- Superpowers skills framework
+- [web-access](https://github.com/eze-is/web-access) - Claude Code web access skill
+- [Superpowers](https://github.com/superpowers) - Skills framework
+- [Claude Code](https://claude.com/claude-code) - AI coding assistant
 
 ---
 
